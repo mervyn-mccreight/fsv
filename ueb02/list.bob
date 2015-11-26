@@ -1,0 +1,61 @@
+*** Spezifikation von Listen ganzer Zahlen
+
+
+obj LIST-OF-INT is
+   sort List .
+   protecting INT .
+   op nil : -> List .
+   op cons : Int List -> List .
+   op length : List -> Int .
+   op append : List List -> List .
+   op head : List -> Int .
+
+   *** Aufgabe 1 c
+   op _lol_ : Int List -> List .
+
+   *** Aufgabe 1 b
+   op tail : List -> List .
+
+   var I : Int . 
+   var L : List .
+   eq length(nil) = 0 .
+   eq length(cons(I,L)) = 1 + length(L) .
+
+   *** Aufgabe 1 c
+   eq I lol L = cons(I, L).
+
+   eq head(cons(I,L)) = I .
+   *** Aufgabe 1 b
+   eq tail(cons(I,L)) = L .
+
+   vars L1 L2 : List .
+   eq append(nil, L) = L .
+   eq append(cons(I,L1), L2) = cons(I, append(L1, L2)) .
+
+   
+endo
+
+red length(cons(17,cons(-4,cons(329,nil)))) .
+red length(nil) .                     ***> should be 0
+red length(cons(I, nil)) .            ***> should be 1
+red length(cons(I, cons(I, nil))) .   ***> should be 2
+red head(cons(3,nil)) .               ***> should be 3
+
+
+open LIST-OF-INT .
+*** Aufgabe 2
+op A : -> List .
+op B : -> List .
+op C : -> List .
+op N : -> Int .
+
+*** Induktionsanfang (n = 0)
+red append(nil, append(B, C)) == append(append(nil, B), C) .
+
+*** Induktionsgleichung (das ist zu zeigen)
+eq append(A, append(B, C)) = append(append(A, B), C) .
+
+*** Induktionsschritt (das ist die induktion von n auf n+1)
+red append(cons(N, nil), append(B, C)) == append(append(cons(N, nil), B), C) .
+***> should be: true
+

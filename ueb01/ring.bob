@@ -1,0 +1,16 @@
+obj RING is
+  sorts Ring .
+
+  op reset : -> Ring .
+  op max : -> Ring .
+  op min : -> Ring .
+  op inc : Ring -> Ring .
+  op dec : Ring -> Ring .
+
+  var N : Ring .
+  eq dec(inc(N)) = N .
+  eq inc(dec(N)) = N .
+
+  eq dec(min) = max .
+  eq inc(max) = min .
+endo

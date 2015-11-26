@@ -1,0 +1,15 @@
+obj STACK is
+	sorts Stack .
+	protecting NAT .
+	
+	op empty : -> Stack .
+	op push : Nat Stack -> Stack .
+	op pop : Stack -> Stack .
+	op top : Stack -> Nat .
+	
+	var S : Stack .
+	var E : Nat .
+
+	eq pop(push(E, S)) = S .
+	eq top(push(E, S)) = E .
+endo

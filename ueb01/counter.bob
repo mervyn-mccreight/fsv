@@ -1,0 +1,6 @@
+obj COUNTER is
+  sorts Counter .
+  op reset : -> Counter .
+  op inc : Counter -> Counter .
+  op dec : Counter -> Counter .
+endo

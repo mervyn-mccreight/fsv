@@ -1,0 +1,99 @@
+This specification describes Phonebook
+
+─ [ NAME, PHONE ] └
+
+State space
+
+┌ PhoneBook
+  known :  𝔽 NAME
+  tel : NAME ⇸ PHONE
+|
+  known = dom tel
+└
+
+Initialization
+
+┌ InitPhoneBook
+ PhoneBook ′
+|
+  tel′ = ∅
+└
+
+
+Operations
+
+The good parts
+
+┌ lookup
+  ΞPhoneBook
+  name? : NAME
+  phone! : PHONE
+|
+  name? ∈ known
+  phone! = tel(name?)
+└
+
+┌ addName
+  ΔPhoneBook
+  name? : NAME
+  phone? : PHONE
+|
+  name? ∉ known
+  
+  tel′ = tel ∪ { name? ↦ phone? }
+└
+
+┌ delName
+  ΔPhoneBook
+  name? : NAME
+  phone? : PHONE
+|
+  name? ∈ known
+  
+  tel′ = tel ∖ { name? ↦ phone? }
+└
+
+
+Error handling
+
+─
+  REPORT ::= okay | name_not_known | name_already_known
+└
+
+┌ Success
+  rep! : REPORT
+|
+  rep! = okay
+└
+
+┌ NotKnown
+  ΞPhoneBook
+  name? : NAME
+  rep! : REPORT
+|
+  name? ∉ known
+  rep! = name_not_known
+└
+
+┌ AlreadyKnown
+  ΞPhoneBook
+  name? : NAME
+  rep! : REPORT
+|
+  name? ∈ known
+  rep! = name_already_known
+└
+
+Robust Operations
+
+─
+  DoFindOp  == (lookup ∧ Success)  ∨ NotKnown
+└
+
+─
+  DoAddName  == (addName ∧ Success) ∨AlreadyKnown
+└
+
+─
+  DoDelName  == (delName ∧ Success) ∨NotKnown
+└
